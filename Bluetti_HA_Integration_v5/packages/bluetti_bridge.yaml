@@ -1,0 +1,2070 @@
+# Bluetti ESP32 Bridge – Home Assistant package v5
+# v5: Messwerte bei laufender/fehlerhafter Runde behalten; Timeout nur anhand des letzten erfolgreichen Zeitstempels. Null-Zeitstempel werden ignoriert.
+# Benötigt eine konfigurierte MQTT-Integration in Home Assistant.
+
+input_text:
+  bluetti_id:
+    name: Bluetti Geräte-ID
+    initial: "EP500XXXXXXXXX"
+    max: 64
+    icon: mdi:identifier
+  bluetti_mqtt_error_code:
+    name: "Bluetti MQTT Rohwert error_code"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_timestamp_ms:
+    name: "Bluetti MQTT Rohwert timestamp_ms"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_ac_output_on:
+    name: "Bluetti MQTT Rohwert ac_output_on"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_dc_output_on:
+    name: "Bluetti MQTT Rohwert dc_output_on"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_round_active:
+    name: "Bluetti MQTT Rohwert round_active"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_total_battery_percent:
+    name: "Bluetti MQTT Rohwert total_battery_percent"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_dc_input_power:
+    name: "Bluetti MQTT Rohwert dc_input_power"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_ac_input_power:
+    name: "Bluetti MQTT Rohwert ac_input_power"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_dc_output_power:
+    name: "Bluetti MQTT Rohwert dc_output_power"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_ac_output_power:
+    name: "Bluetti MQTT Rohwert ac_output_power"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_power_generation:
+    name: "Bluetti MQTT Rohwert power_generation"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_ac_input_voltage:
+    name: "Bluetti MQTT Rohwert ac_input_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_ac_voltage:
+    name: "Bluetti MQTT Rohwert internal_ac_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_pack_voltage:
+    name: "Bluetti MQTT Rohwert internal_pack_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_dc_input_voltage:
+    name: "Bluetti MQTT Rohwert internal_dc_input_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_dc_input_current:
+    name: "Bluetti MQTT Rohwert internal_dc_input_current"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_ac_frequency:
+    name: "Bluetti MQTT Rohwert internal_ac_frequency"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_pack_num:
+    name: "Bluetti MQTT Rohwert pack_num"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell01_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell01_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell02_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell02_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell03_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell03_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell04_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell04_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell05_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell05_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell06_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell06_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell07_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell07_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell08_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell08_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell09_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell09_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell10_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell10_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell11_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell11_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell12_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell12_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell13_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell13_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell14_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell14_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell15_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell15_voltage"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_internal_cell16_voltage:
+    name: "Bluetti MQTT Rohwert internal_cell16_voltage"
+    initial: "unknown"
+    max: 255
+
+  bluetti_mqtt_grid_charge_on:
+    name: "Bluetti MQTT Rohwert grid_charge_on"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_ups_mode:
+    name: "Bluetti MQTT Rohwert ups_mode"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_time_control_on:
+    name: "Bluetti MQTT Rohwert time_control_on"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_battery_range_start:
+    name: "Bluetti MQTT Rohwert battery_range_start"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_battery_range_end:
+    name: "Bluetti MQTT Rohwert battery_range_end"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_auto_sleep_mode:
+    name: "Bluetti MQTT Rohwert auto_sleep_mode"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_split_phase_on:
+    name: "Bluetti MQTT Rohwert split_phase_on"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_split_phase_machine_mode:
+    name: "Bluetti MQTT Rohwert split_phase_machine_mode"
+    initial: "unknown"
+    max: 255
+  bluetti_mqtt_ac_output_mode:
+    name: "Bluetti MQTT Rohwert ac_output_mode"
+    initial: "unknown"
+    max: 255
+
+input_select:
+  bluetti_bridge_datenquelle:
+    name: Bluetti Bridge Datenquelle
+    options:
+      - MQTT
+      - HTTP
+    initial: MQTT
+    icon: mdi:swap-horizontal
+
+input_number:
+  bluetti_bridge_unavailable_timeout:
+    name: Bluetti Timeout bis nicht verfügbar
+    icon: mdi:timer-alert-outline
+    min: 10
+    max: 300
+    step: 5
+    initial: 60
+    unit_of_measurement: s
+    mode: slider
+
+rest:
+  - resource: !secret bluetti_bridge_api_url
+    scan_interval: 5
+    timeout: 4
+    sensor:
+      - name: Bluetti Bridge HTTP Status
+        unique_id: bluetti_bridge_http_status_v2
+        value_template: "{{ value_json.error_code | default(99) }}"
+        json_attributes:
+          - error_code
+          - timestamp_ms
+          - round_active
+          - data
+          - bluetooth_query_delay_ms
+          - mqtt_connected
+          - bluetooth_connected
+
+rest_command:
+  bluetti_bridge_command_http:
+    url: !secret bluetti_bridge_command_url
+    method: POST
+    content_type: "application/json"
+    payload: '{"name":"{{ name }}","value":"{{ value }}"}'
+
+automation:
+  - id: bluetti_bridge_mqtt_router_v2
+    alias: "Bluetti Bridge – dynamischer MQTT-Router"
+    description: "Liest nur Statusmeldungen der in input_text.bluetti_id gewählten Bridge."
+    mode: queued
+    max: 100
+    triggers:
+      - trigger: mqtt
+        topic: "bluetti/+/state/#"
+    conditions:
+      - condition: template
+        value_template: >-
+          {{ trigger.topic.split('/') | length >= 4
+             and trigger.topic.split('/')[0] == 'bluetti'
+             and trigger.topic.split('/')[1] == states('input_text.bluetti_id')
+             and trigger.topic.split('/')[2] == 'state' }}
+    actions:
+      - variables:
+          bluetti_field: "{{ trigger.topic.split('/')[3] }}"
+          bluetti_payload: "{{ trigger.payload | string }}"
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'error_code' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_error_code
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: >-
+                  {{ bluetti_field == 'timestamp_ms'
+                     and (bluetti_payload | int(0)) > 0 }}
+            sequence:
+              # Keep the last known successful timestamp. Ignore empty/zero
+              # timestamps so a transient status publication cannot make all
+              # measurement entities unavailable.
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_timestamp_ms
+                data:
+                  value: "{{ bluetti_payload | int }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'ac_output_on' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_ac_output_on
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'dc_output_on' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_dc_output_on
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'round_active' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_round_active
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'total_battery_percent' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_total_battery_percent
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'dc_input_power' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_dc_input_power
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'ac_input_power' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_ac_input_power
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'dc_output_power' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_dc_output_power
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'ac_output_power' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_ac_output_power
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'power_generation' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_power_generation
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'ac_input_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_ac_input_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_ac_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_ac_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_pack_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_pack_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_dc_input_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_dc_input_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_dc_input_current' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_dc_input_current
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_ac_frequency' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_ac_frequency
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'pack_num' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_pack_num
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell01_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell01_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell02_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell02_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell03_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell03_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell04_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell04_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell05_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell05_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell06_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell06_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell07_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell07_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell08_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell08_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell09_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell09_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell10_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell10_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell11_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell11_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell12_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell12_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell13_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell13_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell14_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell14_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell15_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell15_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'internal_cell16_voltage' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_internal_cell16_voltage
+                data:
+                  value: "{{ bluetti_payload }}"
+
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'grid_charge_on' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_grid_charge_on
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'ups_mode' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_ups_mode
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'time_control_on' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_time_control_on
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'battery_range_start' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_battery_range_start
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'battery_range_end' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_battery_range_end
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'auto_sleep_mode' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_auto_sleep_mode
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'split_phase_on' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_split_phase_on
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'split_phase_machine_mode' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_split_phase_machine_mode
+                data:
+                  value: "{{ bluetti_payload }}"
+          - conditions:
+              - condition: template
+                value_template: "{{ bluetti_field == 'ac_output_mode' }}"
+            sequence:
+              - action: input_text.set_value
+                target:
+                  entity_id: input_text.bluetti_mqtt_ac_output_mode
+                data:
+                  value: "{{ bluetti_payload }}"
+
+template:
+  - sensor:
+      - name: Bluetti Bridge Fehlercode
+        unique_id: bluetti_bridge_error_code_v2
+        icon: mdi:alert-circle-outline
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_error_code') | int(99) }}
+          {% endif %}
+      - name: Bluetti Bridge Zeitstempel
+        unique_id: bluetti_bridge_timestamp_ms_v2
+        icon: mdi:clock-check-outline
+        unit_of_measurement: ms
+        state_class: measurement
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'timestamp_ms') | int(0) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_timestamp_ms') | int(0) }}
+          {% endif %}
+      - name: "Bluetti AC-Ausgangsmodus"
+        unique_id: bluetti_ac_output_mode_sensor_v1
+        icon: mdi:state-machine
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% set raw = d.get('ac_output_mode', 'unknown') if d is mapping else 'unknown' %}
+          {% else %}
+            {% set raw = states('input_text.bluetti_mqtt_ac_output_mode') %}
+          {% endif %}
+          {% set v = raw | string | upper | trim %}
+          {% set v = v.split('.')[-1] %}
+          {% if v in ['0', 'STOP'] %}Stopp
+          {% elif v in ['1', 'INVERTER_OUTPUT'] %}Wechselrichter-Ausgang
+          {% elif v in ['2', 'BYPASS_OUTPUT_C'] %}Bypass-Ausgang C
+          {% elif v in ['3', 'BYPASS_OUTPUT_D'] %}Bypass-Ausgang D
+          {% elif v in ['4', 'LOAD_MATCHING'] %}Lastanpassung
+          {% else %}Unbekannt{% endif %}
+        attributes:
+          rohwert: >-
+            {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+              {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+              {{ d.get('ac_output_mode', 'unknown') if d is mapping else 'unknown' }}
+            {% else %}
+              {{ states('input_text.bluetti_mqtt_ac_output_mode') }}
+            {% endif %}
+      - name: Bluetti Bridge Rundenstatus
+        unique_id: bluetti_bridge_round_active_v2
+        icon: mdi:progress-clock
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'round_active') | default(true) | string | lower }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_round_active') | lower }}
+          {% endif %}
+      - name: Bluetti Bridge Datenalter
+        unique_id: bluetti_bridge_data_age_v2
+        icon: mdi:clock-outline
+        unit_of_measurement: s
+        state_class: measurement
+        state: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% if ts > 0 %}{{ ((as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed)) | int(0)) }}{% else %}unknown{% endif %}
+  - binary_sensor:
+      - name: Bluetti Bridge Daten gültig
+        unique_id: bluetti_bridge_daten_gueltig_v2
+        device_class: connectivity
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+               and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+               and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+               and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+               and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0 }}
+          {% endif %}
+  - sensor:
+      - name: "Bluetti Batterieladung"
+        unique_id: bluetti_total_battery_percent_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['total_battery_percent'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_total_battery_percent') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "%"
+        state_class: measurement
+        device_class: battery
+      - name: "Bluetti DC Eingangsleistung"
+        unique_id: bluetti_dc_input_power_v2
+        icon: mdi:flash
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['dc_input_power'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_dc_input_power') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "W"
+        state_class: measurement
+      - name: "Bluetti AC Eingangsleistung"
+        unique_id: bluetti_ac_input_power_v2
+        icon: mdi:flash
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['ac_input_power'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_ac_input_power') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "W"
+        state_class: measurement
+      - name: "Bluetti DC Ausgangsleistung"
+        unique_id: bluetti_dc_output_power_v2
+        icon: mdi:flash
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['dc_output_power'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_dc_output_power') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "W"
+        state_class: measurement
+      - name: "Bluetti AC Ausgangsleistung"
+        unique_id: bluetti_ac_output_power_v2
+        icon: mdi:flash
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['ac_output_power'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_ac_output_power') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "W"
+        state_class: measurement
+      - name: "Bluetti PV-Leistung"
+        unique_id: bluetti_power_generation_v2
+        icon: mdi:solar-power
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['dc_input_power'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_dc_input_power') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "W"
+        state_class: measurement
+      - name: "Bluetti PV-Energie"
+        unique_id: bluetti_pv_energy_v1
+        icon: mdi:solar-power-variant
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['power_generation'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_power_generation') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "kWh"
+        device_class: energy
+        state_class: total_increasing
+      - name: "Bluetti AC Eingangsspannung"
+        unique_id: bluetti_ac_input_voltage_v2
+        icon: mdi:sine-wave
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['ac_input_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_ac_input_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Interne AC-Spannung"
+        unique_id: bluetti_internal_ac_voltage_v2
+        icon: mdi:sine-wave
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_ac_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_ac_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Interne Packspannung"
+        unique_id: bluetti_internal_pack_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_pack_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_pack_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Interne DC-Eingangsspannung"
+        unique_id: bluetti_internal_dc_input_voltage_v2
+        icon: mdi:sine-wave
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_dc_input_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_dc_input_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Interner DC-Eingangsstrom"
+        unique_id: bluetti_internal_dc_input_current_v2
+        icon: mdi:current-dc
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_dc_input_current'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_dc_input_current') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "A"
+        state_class: measurement
+      - name: "Bluetti Interne AC-Frequenz"
+        unique_id: bluetti_internal_ac_frequency_v2
+        icon: mdi:sine-wave
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_ac_frequency'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_ac_frequency') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "Hz"
+        state_class: measurement
+      - name: "Bluetti Anzahl Akkupacks"
+        unique_id: bluetti_pack_num_v2
+        icon: mdi:battery-multiple
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['pack_num'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_pack_num') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+      - name: "Bluetti Zellspannung 1"
+        unique_id: bluetti_internal_cell01_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell01_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell01_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 2"
+        unique_id: bluetti_internal_cell02_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell02_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell02_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 3"
+        unique_id: bluetti_internal_cell03_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell03_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell03_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 4"
+        unique_id: bluetti_internal_cell04_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell04_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell04_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 5"
+        unique_id: bluetti_internal_cell05_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell05_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell05_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 6"
+        unique_id: bluetti_internal_cell06_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell06_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell06_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 7"
+        unique_id: bluetti_internal_cell07_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell07_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell07_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 8"
+        unique_id: bluetti_internal_cell08_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell08_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell08_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 9"
+        unique_id: bluetti_internal_cell09_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell09_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell09_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 10"
+        unique_id: bluetti_internal_cell10_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell10_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell10_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 11"
+        unique_id: bluetti_internal_cell11_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell11_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell11_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 12"
+        unique_id: bluetti_internal_cell12_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell12_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell12_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 13"
+        unique_id: bluetti_internal_cell13_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell13_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell13_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 14"
+        unique_id: bluetti_internal_cell14_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell14_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell14_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 15"
+        unique_id: bluetti_internal_cell15_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell15_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell15_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+      - name: "Bluetti Zellspannung 16"
+        unique_id: bluetti_internal_cell16_voltage_v2
+        icon: mdi:battery
+        availability: >-
+          {% set ts = states('sensor.bluetti_bridge_zeitstempel') | int(0) %}
+          {% set age = as_timestamp(now()) - as_timestamp(states.sensor.bluetti_bridge_zeitstempel.last_changed, 0) %}
+          {{ ts > 0 and age < (states('input_number.bluetti_bridge_unavailable_timeout') | float(60)) }}
+        state: >-
+          {% set valid_round = (
+            (is_state('input_select.bluetti_bridge_datenquelle', 'HTTP')
+             and state_attr('sensor.bluetti_bridge_http_status', 'error_code') | int(99) == 0
+             and state_attr('sensor.bluetti_bridge_http_status', 'round_active') | string | lower == 'false'
+             and state_attr('sensor.bluetti_bridge_http_status', 'data') is mapping)
+            or
+            (is_state('input_select.bluetti_bridge_datenquelle', 'MQTT')
+             and states('input_text.bluetti_mqtt_error_code') | int(99) == 0
+             and states('input_text.bluetti_mqtt_round_active') | lower == 'false'
+             and states('input_text.bluetti_mqtt_timestamp_ms') | int(0) > 0)
+          ) %}
+          {% if valid_round %}
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {{ state_attr('sensor.bluetti_bridge_http_status', 'data')['internal_cell16_voltage'] | float(none) }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_internal_cell16_voltage') | float(none) }}
+          {% endif %}
+          {% else %}
+            {{ this.state }}
+          {% endif %}
+        unit_of_measurement: "V"
+        state_class: measurement
+
+  - switch:
+      - name: "Bluetti AC-Ausgang"
+        unique_id: bluetti_ac_output_switch_v1
+        icon: mdi:power-plug
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% if d is mapping and 'ac_output_on' in d %}
+              {{ d['ac_output_on'] | string | lower in ['on', 'true', '1', 'yes'] }}
+            {% else %} {{ this.state == 'on' }} {% endif %}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_ac_output_on') | lower in ['on', 'true', '1', 'yes'] }}
+          {% endif %}
+        turn_on:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/ac_output_on"
+                      payload: "ON"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: ac_output_on
+                      value: "ON"
+        turn_off:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/ac_output_on"
+                      payload: "OFF"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: ac_output_on
+                      value: "OFF"
+      - name: "Bluetti DC-Ausgang"
+        unique_id: bluetti_dc_output_switch_v1
+        icon: mdi:power-socket-de
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% if d is mapping and 'dc_output_on' in d %}
+              {{ d['dc_output_on'] | string | lower in ['on', 'true', '1', 'yes'] }}
+            {% else %} {{ this.state == 'on' }} {% endif %}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_dc_output_on') | lower in ['on', 'true', '1', 'yes'] }}
+          {% endif %}
+        turn_on:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/dc_output_on"
+                      payload: "ON"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: dc_output_on
+                      value: "ON"
+        turn_off:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/dc_output_on"
+                      payload: "OFF"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: dc_output_on
+                      value: "OFF"
+
+  - switch:
+      - name: "Bluetti Netzladen"
+        unique_id: bluetti_grid_charge_on_switch_v1
+        icon: mdi:transmission-tower
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% if d is mapping and 'grid_charge_on' in d %}
+              {{ d['grid_charge_on'] | string | lower in ['on', 'true', '1', 'yes'] }}
+            {% else %} {{ this.state == 'on' }} {% endif %}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_grid_charge_on') | lower in ['on', 'true', '1', 'yes'] }}
+          {% endif %}
+        turn_on:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/grid_charge_on"
+                      payload: "ON"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: grid_charge_on
+                      value: "ON"
+        turn_off:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/grid_charge_on"
+                      payload: "OFF"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: grid_charge_on
+                      value: "OFF"
+      - name: "Bluetti Zeitsteuerung"
+        unique_id: bluetti_time_control_on_switch_v1
+        icon: mdi:calendar-clock
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% if d is mapping and 'time_control_on' in d %}
+              {{ d['time_control_on'] | string | lower in ['on', 'true', '1', 'yes'] }}
+            {% else %} {{ this.state == 'on' }} {% endif %}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_time_control_on') | lower in ['on', 'true', '1', 'yes'] }}
+          {% endif %}
+        turn_on:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/time_control_on"
+                      payload: "ON"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: time_control_on
+                      value: "ON"
+        turn_off:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/time_control_on"
+                      payload: "OFF"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: time_control_on
+                      value: "OFF"
+      - name: "Bluetti Split-Phase"
+        unique_id: bluetti_split_phase_on_switch_v1
+        icon: mdi:sine-wave
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% if d is mapping and 'split_phase_on' in d %}
+              {{ d['split_phase_on'] | string | lower in ['on', 'true', '1', 'yes'] }}
+            {% else %} {{ this.state == 'on' }} {% endif %}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_split_phase_on') | lower in ['on', 'true', '1', 'yes'] }}
+          {% endif %}
+        turn_on:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/split_phase_on"
+                      payload: "ON"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: split_phase_on
+                      value: "ON"
+        turn_off:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/split_phase_on"
+                      payload: "OFF"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: split_phase_on
+                      value: "OFF"
+  - select:
+      - name: "Bluetti Betriebsmodus"
+        unique_id: bluetti_ups_mode_select_v1
+        icon: mdi:state-machine
+        options: "{{ ['CUSTOMIZED', 'PV_PRIORITY', 'STANDARD', 'TIME_CONTROL'] }}"
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% set raw = d.get('ups_mode', 'unknown') if d is mapping else 'unknown' %}
+          {% else %}
+            {% set raw = states('input_text.bluetti_mqtt_ups_mode') %}
+          {% endif %}
+          {% set v = raw | string | upper %}
+          {% if v == '1' %}CUSTOMIZED
+          {% elif v == '2' %}PV_PRIORITY
+          {% elif v == '3' %}STANDARD
+          {% elif v == '4' %}TIME_CONTROL
+          {% elif v in ['CUSTOMIZED', 'PV_PRIORITY', 'STANDARD', 'TIME_CONTROL'] %}{{ v }}
+          {% else %}unknown{% endif %}
+        select_option:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/ups_mode"
+                      payload: "{{ option }}"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: ups_mode
+                      value: "{{ option }}"
+      - name: "Bluetti Display-Ruhemodus"
+        unique_id: bluetti_auto_sleep_mode_select_v1
+        icon: mdi:sleep
+        options: "{{ ['THIRTY_SECONDS', 'ONE_MINUTE', 'FIVE_MINUTES', 'NEVER'] }}"
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% set raw = d.get('auto_sleep_mode', 'unknown') if d is mapping else 'unknown' %}
+          {% else %}
+            {% set raw = states('input_text.bluetti_mqtt_auto_sleep_mode') %}
+          {% endif %}
+          {% set v = raw | string | upper %}
+          {% if v == '2' %}THIRTY_SECONDS
+          {% elif v == '3' %}ONE_MINUTE
+          {% elif v == '4' %}FIVE_MINUTES
+          {% elif v == '5' %}NEVER
+          {% elif v in ['THIRTY_SECONDS', 'ONE_MINUTE', 'FIVE_MINUTES', 'NEVER'] %}{{ v }}
+          {% else %}unknown{% endif %}
+        select_option:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/auto_sleep_mode"
+                      payload: "{{ option }}"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: auto_sleep_mode
+                      value: "{{ option }}"
+      - name: "Bluetti Split-Phase-Geräterolle"
+        unique_id: bluetti_split_phase_machine_mode_select_v1
+        icon: mdi:transmission-tower-export
+        options: "{{ ['SLAVE', 'MASTER'] }}"
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {% set raw = d.get('split_phase_machine_mode', 'unknown') if d is mapping else 'unknown' %}
+          {% else %}
+            {% set raw = states('input_text.bluetti_mqtt_split_phase_machine_mode') %}
+          {% endif %}
+          {% set v = raw | string | upper %}
+          {% if v == '0' %}SLAVE
+          {% elif v == '1' %}MASTER
+          {% elif v in ['SLAVE', 'MASTER'] %}{{ v }}
+          {% else %}unknown{% endif %}
+        select_option:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/split_phase_machine_mode"
+                      payload: "{{ option }}"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: split_phase_machine_mode
+                      value: "{{ option }}"
+  - number:
+      - name: "Bluetti Batteriegrenze unten"
+        unique_id: bluetti_battery_range_start_number_v1
+        icon: mdi:battery-low
+        min: 0
+        max: 100
+        step: 1
+        unit_of_measurement: "%"
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {{ d.get('battery_range_start', 0) | float(0) if d is mapping else 0 }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_battery_range_start') | float(0) }}
+          {% endif %}
+        set_value:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/battery_range_start"
+                      payload: "{{ value | int }}"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: battery_range_start
+                      value: "{{ value | int }}"
+      - name: "Bluetti Batteriegrenze oben"
+        unique_id: bluetti_battery_range_end_number_v1
+        icon: mdi:battery-high
+        min: 0
+        max: 100
+        step: 1
+        unit_of_measurement: "%"
+        state: >-
+          {% if is_state('input_select.bluetti_bridge_datenquelle', 'HTTP') %}
+            {% set d = state_attr('sensor.bluetti_bridge_http_status', 'data') %}
+            {{ d.get('battery_range_end', 0) | float(0) if d is mapping else 0 }}
+          {% else %}
+            {{ states('input_text.bluetti_mqtt_battery_range_end') | float(0) }}
+          {% endif %}
+        set_value:
+          - choose:
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: MQTT
+                sequence:
+                  - action: mqtt.publish
+                    data:
+                      topic: "bluetti/{{ states('input_text.bluetti_id') }}/command/battery_range_end"
+                      payload: "{{ value | int }}"
+              - conditions:
+                  - condition: state
+                    entity_id: input_select.bluetti_bridge_datenquelle
+                    state: HTTP
+                sequence:
+                  - action: rest_command.bluetti_bridge_command_http
+                    data:
+                      name: battery_range_end
+                      value: "{{ value | int }}"
+
