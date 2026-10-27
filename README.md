@@ -420,25 +420,27 @@ Das HA-Paket verwendet den Status der Messrunde, um nur vollständige und gülti
 
 ## 8. genutzte Arduino LIBs
 
-Bibliothek NimBLE-Arduino in Version 1.4.3 
-Bibliothek Preferences in Version 3.3.6 
-Bibliothek EEPROM in Version 3.3.6 
-Bibliothek WiFi in Version 3.3.6 
-Bibliothek Networking in Version 3.3.6 
-Bibliothek ESP Async WebServer in Version 3.6.0 
-Bibliothek FS in Version 3.3.6 
-Bibliothek Async TCP in Version 3.5.0 
-Bibliothek ESPmDNS in Version 3.3.6 
-Bibliothek ElegantOTA in Version 3.1.7 
-Bibliothek Update in Version 3.3.6 
-Bibliothek PubSubClient in Version 2.8 
-Bibliothek WiFiManager in Version 2.0.17 
-Bibliothek WebServer in Version 3.3.6 
-Bibliothek DNSServer in Version 3.3.6 
-Bibliothek ESP32 Async UDP in Version 3.3.6 
-Bibliothek Wire in Version 3.3.6 
-Bibliothek Adafruit GFX Library in Version 1.12.6 
-Bibliothek Adafruit BusIO in Version 1.17.4 
-Bibliothek SPI in Version 3.3.6 
-Bibliothek Adafruit SSD1306 in Version 2.0.0 
+<<<<<<< HEAD
+Bibliothek NimBLE-Arduino in Version 1.4.3
+Bibliothek Preferences in Version 3.3.6
+Bibliothek EEPROM in Version 3.3.6
+Bibliothek WiFi in Version 3.3.6
+Bibliothek Networking in Version 3.3.6
+Bibliothek ESP Async WebServer in Version 3.6.0
+Bibliothek FS in Version 3.3.6
+Bibliothek Async TCP in Version 3.5.0
+Bibliothek ESPmDNS in Version 3.3.6
+Bibliothek ElegantOTA in Version 3.1.7
+Bibliothek Update in Version 3.3.6
+Bibliothek PubSubClient in Version 2.8
+Bibliothek WiFiManager in Version 2.0.17
+Bibliothek WebServer in Version 3.3.6
+Bibliothek DNSServer in Version 3.3.6
+Bibliothek ESP32 Async UDP in Version 3.3.6
+Bibliothek Wire in Version 3.3.6
+Bibliothek Adafruit GFX Library in Version 1.12.6
+Bibliothek Adafruit BusIO in Version 1.17.4
+Bibliothek SPI in Version 3.3.6
+Bibliothek Adafruit SSD1306 in Version 2.0.0
 Bibliothek Hash in Version 3.3.6
+>>>>>>> 032cde9a6c7eee075b7870af1aaa9c76ff4f438c
