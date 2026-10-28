@@ -1,4 +1,4 @@
-Bluetti ESP32 Bridge – Home Assistant Paket v4
+Bluetti ESP32 Bridge – Home Assistant Paket v5
 =============================================
 
 Dateien
