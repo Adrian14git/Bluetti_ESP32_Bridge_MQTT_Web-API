@@ -4,7 +4,7 @@
 
 # Bluetti ESP32 Bridge – MQTT- und Web-API-Dokumentation
 
-**Projektstand:** Firmware mit MQTT-Abschaltung über die Weboberfläche, HTTP/JSON-API und Status-LED GPIO 8; dazu Home-Assistant-Paket v3 mit AC-/DC-Ausgangsschaltern.
+**Projektstand:** Firmware mit MQTT-Abschaltung über die Weboberfläche, HTTP/JSON-API und Status-LED GPIO 8; dazu Home-Assistant-Paket v5 mit AC-/DC-Ausgangsschaltern.
 
 > **Wichtig zur Genauigkeit:** Die Topic-Struktur und HTTP-Endpunkte sind aus dem Quellstand der Firmware abgeleitet. Die Firmware ist für das konfigurierte Bluetti-Geräteprofil gebaut; die tatsächlich verfügbaren Messfelder und Schreibbefehle hängen vom verwendeten Profil in der Firmware ab. Beispiele verwenden die EP500-Geräte-ID `EP500xxxxxxxxxxx`; bitte durch die in der Bridge konfigurierte Geräte-ID ersetzen.
 
